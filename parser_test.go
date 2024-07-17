@@ -1,12 +1,12 @@
 package resolvconf_test
 
 import (
-	"github.com/stretchr/testify/assert"
 	"net"
 	"strings"
 	"testing"
 
-	"." // import the main package
+	"github.com/jakm/resolvconf"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestReadNewNameserver(t *testing.T) {

@@ -1,16 +1,17 @@
 package resolvconf_test
 
 import (
-	"."
 	"bytes"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"log"
 	"net"
 	"net/http"
 	"os"
 	"strconv"
 	"testing"
+
+	"github.com/jakm/resolvconf"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewConf(t *testing.T) {
@@ -450,7 +451,9 @@ func ExampleConf_Remove() {
 }
 
 func Example() {
-	res, err := http.Get("https://gist.githubusercontent.com/turadg/7876784/raw/c7f2500fa4762cfe443e30c64c6ed8a888f6ac74/resolv.conf")
+	res, err := http.Get(
+		"https://gist.githubusercontent.com/turadg/7876784/raw/c7f2500fa4762cfe443e30c64c6ed8a888f6ac74/resolv.conf",
+	)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -460,7 +463,10 @@ func Example() {
 	}
 	res.Body.Close()
 	conf.Remove(resolvconf.NewNameserver(net.ParseIP("8.8.4.4")))
-	conf.Add(resolvconf.NewDomain("foo.bar"), resolvconf.NewSortItem(net.ParseIP("130.155.160.0")).SetNetmask(net.ParseIP("255.255.240.0")))
+	conf.Add(
+		resolvconf.NewDomain("foo.bar"),
+		resolvconf.NewSortItem(net.ParseIP("130.155.160.0")).SetNetmask(net.ParseIP("255.255.240.0")),
+	)
 	conf.Write(os.Stdout)
 	// Output: domain foo.bar
 	// nameserver 8.8.8.8
